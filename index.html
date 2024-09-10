@@ -26,7 +26,7 @@
                     class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     Search
                 </button>
-                <hr class="w-full my-2 border-white">
+                <hr class="w-full my-4 border-white">
                 <button id="locationBtn"
                     class="w-full bg-green-500 hover:bg-green-700 text-white py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                     <i class="fa-solid fa-location-crosshairs p-2"></i>Use Current Location
@@ -34,7 +34,7 @@
 
                 <hr class="w-full my-4 border-white">
 
-                <div id="dropdownContainer" class="flex justify-center mt-4 p-1">
+                <div id="dropdownContainer" class="flex justify-center p-1">
                     <select id="cityDropdown" class="w-full bg-gray-700 text-white p-2 rounded-lg focus:outline-none">
                         <option value="" disabled selected>Select recently searched cities</option>
                     </select>
@@ -57,7 +57,8 @@
             </div>
 
             <!-- weather forecast-->
-            <div id="forecastContainer" class="bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col items-start">
+            <div id="forecastContainer"
+                class="bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col items-center w-full md:col-span-2">
                 <h2 class="text-3xl font-semibold text-white mb-4">Weather Forecast</h2>
                 <div id="forecastDays" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     <!-- Each day's forecast will go here -->
