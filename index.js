@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         cityNameElem.textContent = cityName;
         conditionTextElem.textContent = weatherData.condition.text;
-        conditionIconElem.src = `http:${weatherData.condition.icon}`;
+        conditionIconElem.innerHTML = `<img src="${data.current.condition.icon}" alt="Weather Condition Icon" class="w-24 h-24">`;
         temperatureElem.textContent = `Temperature: ${weatherData.temp_c}°C`;
         feelsLikeElem.textContent = `Feels Like: ${weatherData.feelslike_c}°C`;
         windElem.textContent = `Wind: ${weatherData.wind_kph} km/h`;
