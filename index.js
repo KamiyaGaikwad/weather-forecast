@@ -27,8 +27,26 @@ document.addEventListener('DOMContentLoaded', function () {
 const API_KEY = '7fdd900994b9456b832215556241009';
 const API_BASE_URL = 'http://api.weatherapi.com/v1';
 
+// function to get the weather in a particular city using its name
 async function getWeatherByCityName(cityName) {
     const url = `${API_BASE_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(cityName)}`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.log('Weather data for city:', data);
+        // Process and display data as needed
+    } catch (error) {
+        console.error('Error fetching weather data:', error);
+    }
+}
+
+// function to get the weather in a area by location
+async function getWeatherByCoordinates(lat, lon) {
+    const url = `${API_BASE_URL}/current.json?key=${API_KEY}&q=${lat},${lon}`;
   
     try {
       const response = await fetch(url);
@@ -36,7 +54,7 @@ async function getWeatherByCityName(cityName) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      console.log('Weather data for city:', data);
+      console.log('Weather data for current location:', data);
       // Process and display data as needed
     } catch (error) {
       console.error('Error fetching weather data:', error);
