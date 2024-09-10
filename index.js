@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (city) {
             console.log('City detected as', city, "will find weather");
             getWeatherByCityName(city)
+            addCityToDropdown(city);
         }
     });
 
@@ -31,12 +32,30 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // event listner for city selection dropdown
     cityDropdown.addEventListener('change', function () {
         const selectedCity = cityDropdown.value;
         if (selectedCity) {
             getWeatherByCityName(selectedCity);
         }
     });
+
+    // function to add current city to dropdown
+    function addCityToDropdown(city) {
+        let cities = JSON.parse(localStorage.getItem('recentCities')) || [];
+        
+        // Add new cities to the array
+        if (!cities.includes(city)) {
+            cities.unshift(city);
+            if (cities.length > 7) {
+                cities.pop(); // only retain the last 7 cities
+            }
+            // add to local storage
+            localStorage.setItem('recentCities', JSON.stringify(cities));
+            populateDropdown();
+        }
+    }
+
 
 
     const API_KEY = '7fdd900994b9456b832215556241009';
@@ -59,6 +78,8 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error fetching weather data:', error);
         }
     }
+
+    
 
     // function to get the weather in a area by location
     async function getWeatherByCoordinates(lat, lon) {
