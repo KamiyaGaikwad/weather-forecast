@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //extract elemnets in the weatherContainer
     const weatherContainerElem = document.getElementById('weatherContainer');
     const cityNameElem = document.getElementById('cityName');
+    const dateElem = document.getElementById('todayDate');
     const conditionTextElem = document.getElementById('conditionText');
     const conditionIconElem = document.getElementById('conditionIcon');
     const temperatureElem = document.getElementById('temperature');
@@ -113,8 +114,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-
-
     // function to get the weather in a area by location
     async function getWeatherByCoordinates(lat, lon) {
         const url = `${API_BASE_URL}/current.json?key=${API_KEY}&q=${lat},${lon}`;
@@ -137,17 +136,80 @@ document.addEventListener('DOMContentLoaded', function () {
     function displayWeatherData(data) {
         const weatherData = data.current;
         const cityName = data.location.name;
+        // Extract date from API's location.localtime
+        const localtime = data.location.localtime;
+        const formattedDate = localtime.split(' ')[0]; // Extract just the date part
+
 
         cityNameElem.textContent = cityName;
+        dateElem.textContent = `Today's Date: ${formattedDate}`;
         conditionTextElem.textContent = weatherData.condition.text;
         conditionIconElem.innerHTML = `<img src="${data.current.condition.icon}" alt="Weather Condition Icon" class="w-24 h-24">`;
         temperatureElem.textContent = `Temperature: ${weatherData.temp_c}°C`;
         feelsLikeElem.textContent = `Feels Like: ${weatherData.feelslike_c}°C`;
         windElem.textContent = `Wind: ${weatherData.wind_kph} km/h`;
         humidityElem.textContent = `Humidity: ${weatherData.humidity}%`;
-
         weatherContainerElem.classList.remove('hidden');
+        getWeatherForecast(cityName)
+
+    }
+
+    async function getWeatherForecast(cityName) {
+        const url = `${API_BASE_URL}/forecast.json?key=${API_KEY}&q=${encodeURIComponent(cityName)}&days=3`;  // Adjust days as needed
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log('Weather forecast data for city:', data);
+
+            // Display forecast data
+            displayWeatherForecast(data.forecast.forecastday);
+        } catch (error) {
+            console.error('Error fetching forecast data:', error);
+        }
+
+
+
+    }
+
+    function displayWeatherForecast(forecastDays) {
+        const forecastContainer = document.getElementById('forecastContainer');
+        const forecastDaysElem = document.getElementById('forecastDays');
+
+        // Remove previous city forecast data
+        forecastDaysElem.innerHTML = '';
+
+        forecastDays.forEach(day => {
+            const forecastDate = new Date(day.date).toDateString();
+            const maxTemp = day.day.maxtemp_c;
+            const minTemp = day.day.mintemp_c;
+            const conditionText = day.day.condition.text;
+            const conditionIcon = day.day.condition.icon;  // URL for the condition icon
+
+            // Create forecast card
+            const forecastCard = `
+                <div class="bg-gray-700 p-4 rounded-lg flex flex-col items-center">
+                    <h3 class="text-xl text-white">${forecastDate}</h3>
+                    <img src="${conditionIcon}" alt="${conditionText}" class="w-16 h-16 mb-2">
+                    <p class="text-white">Max Temp: ${maxTemp}°C</p>
+                    <p class="text-white">Min Temp: ${minTemp}°C</p>
+                    <p class="text-white">${conditionText}</p>
+                </div>
+            `;
+
+            // Append forecast card to the container
+            forecastDaysElem.innerHTML += forecastCard;
+        });
+
+        // Make the forecast container visible
+        forecastContainer.classList.remove('hidden');
+
     }
 
 });
+
+
 
