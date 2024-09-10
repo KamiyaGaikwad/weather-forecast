@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
                 console.log('Searching for location using device:', latitude, longitude);
-                // TODO: Add api call here
+                getWeatherByCoordinates(latitude,longitude)
             }, function (error) {
                 console.error('Error getting location:', error);
             });
