@@ -31,7 +31,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    
+    cityDropdown.addEventListener('change', function () {
+        const selectedCity = cityDropdown.value;
+        if (selectedCity) {
+            getWeatherByCityName(selectedCity);
+        }
+    });
+
 
     const API_KEY = '7fdd900994b9456b832215556241009';
     const API_BASE_URL = 'http://api.weatherapi.com/v1';
