@@ -18,7 +18,7 @@
     <main class="p-4 sm:p-6 md:p-8 lg:p-10">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Input/ actions area-->
-            <div class="max-w-md mx-auto bg-gray-800 p-8 rounded-lg shadow-lg">
+            <div class="bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col items-start">
                 <label for="city" class="block text-lg font-medium mb-2">City</label>
                 <input type="text" id="city" placeholder="Enter the city you want to search weather for"
                     class="w-full p-3 mb-2 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none" />
@@ -26,15 +26,17 @@
                     class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     Search
                 </button>
-                <hr class="m-4">
+                <hr class="w-full my-2 border-white">
                 <button id="locationBtn"
                     class="w-full bg-green-500 hover:bg-green-700 text-white py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                     <i class="fa-solid fa-location-crosshairs p-2"></i>Use Current Location
                 </button>
-                <hr class="m-4">
-                <div id="dropdownContainer" class="relative mt-4 p-2">
+
+                <hr class="w-full my-4 border-white">
+
+                <div id="dropdownContainer" class="flex justify-center mt-4 p-1">
                     <select id="cityDropdown" class="w-full bg-gray-700 text-white p-2 rounded-lg focus:outline-none">
-                        <option value="" disabled selected>Select recently searched cities</option>                   
+                        <option value="" disabled selected>Select recently searched cities</option>
                     </select>
                 </div>
             </div>
@@ -52,6 +54,14 @@
                 <p id="feelsLike" class="text-xl text-white mb-2">Feels Like: ...°C</p>
                 <p id="wind" class="text-xl text-white mb-2">Wind: ... km/h</p>
                 <p id="humidity" class="text-xl text-white">Humidity: ... %</p>
+            </div>
+
+            <!-- weather forecast-->
+            <div id="forecastContainer" class="bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col items-start">
+                <h2 class="text-3xl font-semibold text-white mb-4">Weather Forecast</h2>
+                <div id="forecastDays" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <!-- Each day's forecast will go here -->
+                </div>
             </div>
         </div>
     </main>
