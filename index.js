@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const humidityElem = document.getElementById('humidity');
 
     // empty state of the dropdown
+    const dropdownContainer = document.getElementById('dropdownContainer')
     const cityDropdown = document.getElementById('cityDropdown');
 
     // event listner for searchButton
@@ -71,13 +72,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function populateDropdown() {
         const cities = JSON.parse(localStorage.getItem('recentCities')) || [];
-        cityDropdown.innerHTML = '<option value="" disabled selected>Select recently searched cities</option>';
-        cities.forEach(city => {
-            const option = document.createElement('option');
-            option.value = city;
-            option.textContent = city;
-            cityDropdown.appendChild(option);
-        });
+        if (cities.length === 0) {
+            dropdownContainer.style.display = 'none'; // Hide dropdown if no cities are there
+        }
+
+        else {
+            cityDropdown.innerHTML = '<option value="" disabled selected>Select recently searched cities</option>';
+            cities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city;
+                option.textContent = city;
+                cityDropdown.appendChild(option);
+            });
+            dropdownContainer.style.display = 'block'; // Show dropdown container if cities are present
+        }
     }
 
 
