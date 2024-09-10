@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const city = document.getElementById('city').value;
         if (city) {
             console.log('City detected as', city, "will find weather");
-            // Will add API call here later
+            getWeatherByCityName(city)
         }
     });
 
@@ -25,4 +25,20 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 const API_KEY = '7fdd900994b9456b832215556241009';
-const BASE_URL = 'http://api.weatherapi.com/v1';
+const API_BASE_URL = 'http://api.weatherapi.com/v1';
+
+async function getWeatherByCityName(cityName) {
+    const url = `${API_BASE_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(cityName)}`;
+  
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log('Weather data for city:', data);
+      // Process and display data as needed
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+    }
+  }
