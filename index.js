@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('searchBtn').addEventListener('click', function () {
         const city = document.getElementById('city').value;
         if (city) {
-            console.log('City detected as', city);
+            console.log('City detected as', city, "will find weather");
             // Will add API call here later
         }
     });
@@ -23,3 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 });
+
+const API_KEY = '7fdd900994b9456b832215556241009';
+const BASE_URL = 'http://api.weatherapi.com/v1';
