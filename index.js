@@ -21,8 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('City detected as', city, "will find weather");
             // find weather by city name
             getWeatherByCityName(city)
-            // add this city to the recent city dropdown and to local storage
-            addCityToDropdown(city);
         }
     });
 
@@ -100,16 +98,31 @@ document.addEventListener('DOMContentLoaded', function () {
     async function getWeatherByCityName(cityName) {
         const url = `${API_BASE_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(cityName)}`;
 
+        // Clear previous error if any
+        hideError();
+
         try {
+
             const response = await fetch(url);
             if (!response.ok) {
+                showError('Error fetching weather data. Please try another city or alternative name');
                 throw new Error('Network response was not ok');
             }
+
             const data = await response.json();
             console.log('Weather data for city:', data);
-            displayWeatherData(data);
-            // Process and display data as needed
+            if (data.error) {
+                showError('Error fetching weather data. Please try another city or alternative name');
+            }
+            else {
+                displayWeatherData(data);
+                 // add this city to the recent city dropdown and to local storage
+                 addCityToDropdown(data.location.name);
+            }
+
+
         } catch (error) {
+            showError('Error fetching weather data. Please try another city or alternative name');
             console.error('Error fetching weather data:', error);
         }
     }
@@ -118,21 +131,55 @@ document.addEventListener('DOMContentLoaded', function () {
     async function getWeatherByCoordinates(lat, lon) {
         const url = `${API_BASE_URL}/current.json?key=${API_KEY}&q=${lat},${lon}`;
 
+        // Clear previous error data if any
+        hideError();
+
         try {
             const response = await fetch(url);
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                showError('Error fetching weather data. Please try another city or alternative name');
             }
             const data = await response.json();
-            console.log('Weather data for current location:', data);
-            displayWeatherData(data);
-            addCityToDropdown(data.location.name)
-            // Process and display data as needed
+            if (data.error) {
+                showError('Error fetching weather data. Please try another city or alternative name');
+            }
+            else {
+                console.log('Weather data for current location:', data);
+                displayWeatherData(data);
+                addCityToDropdown(data.location.name)
+            }
+
         } catch (error) {
+            showError('Error fetching weather data. Please try another city or alternative name');
             console.error('Error fetching weather data:', error);
         }
     }
 
+    // Function to display error messages in the weather container itself
+    // Function to display error messages
+    function showError(message) {
+        const errorElem = document.getElementById('errorContainer');
+        errorElem.textContent = message;
+        errorElem.classList.remove('hidden');
+        weatherContainerElem.classList.add('hidden');
+        
+        const forecastContainer = document.getElementById('forecastContainer');
+        forecastContainer.classList.add('hidden'); 
+    }
+
+    // Function to hide the error message
+    function hideError() {
+        const errorElem = document.getElementById('errorContainer');
+        errorElem.textContent = '';
+        errorElem.classList.add('hidden');
+    }
+
+    // Function to clear the previous weather data populated during last api call
+    function clearWeatherData() {
+        weatherContainerElem.innerHTML = ''; // Clear previous weather data
+    }
+
+    // function to display weather data in the weather container
     function displayWeatherData(data) {
         const weatherData = data.current;
         const cityName = data.location.name;
@@ -154,6 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
+    // function to get the weather forecast using cityName
     async function getWeatherForecast(cityName) {
         const url = `${API_BASE_URL}/forecast.json?key=${API_KEY}&q=${encodeURIComponent(cityName)}&days=3`;  // Adjust days as needed
 
@@ -175,6 +223,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
+    // function to display the weatherforceast in the forecast container
     function displayWeatherForecast(forecastDays) {
         const forecastContainer = document.getElementById('forecastContainer');
         const forecastDaysElem = document.getElementById('forecastDays');
