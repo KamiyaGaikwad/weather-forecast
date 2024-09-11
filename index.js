@@ -21,6 +21,15 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('City detected as', city, "will find weather");
             // find weather by city name
             getWeatherByCityName(city)
+        }else {
+            showError('Please enter a city name.');
+        }
+    });
+
+    cityInput.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent form submission
+            searchBtn.click(); // Trigger the search button click event
         }
     });
 
