@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    cityInput.addEventListener('keypress', function (event) {
+    cityNameElem.addEventListener('keypress', function (event) {
         if (event.key === 'Enter') {
             event.preventDefault(); // Prevent form submission
             searchBtn.click(); // Trigger the search button click event
