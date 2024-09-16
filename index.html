@@ -5,9 +5,14 @@
     <title>Weather Forecast app</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/4bf861096a.js" crossorigin="anonymous"></script>
+    
 </head>
 
 <body>
@@ -31,8 +36,8 @@
                     <i class="fa-solid fa-location-crosshairs p-2"></i>Use Current Location
                 </button>
 
-                <div id="dropdownContainer" class="flex justify-center p-1">
-                    <hr class="w-full my-4 border-white">
+                <div id="dropdownContainer" class="flex justify-center p-1 mt-2">
+                    <p class="text-sm text-base">Select from recent cities</p>
                     <select id="cityDropdown" class="w-full bg-gray-700 text-white p-2 rounded-lg focus:outline-none">
                         <option value="" disabled selected>Select recently searched cities</option>
                     </select>

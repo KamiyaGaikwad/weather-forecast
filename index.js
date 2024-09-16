@@ -18,11 +18,13 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('searchBtn').addEventListener('click', function () {
         const city = document.getElementById('city').value;
         if (city) {
+            cityDropdown.value = "";
             console.log('City detected as', city, "will find weather");
             // find weather by city name
             getWeatherByCityName(city)
         } else {
             showError('Please enter a city name.');
+            cityDropdown.value = "";
         }
     });
 
