@@ -14,6 +14,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const dropdownContainer = document.getElementById('dropdownContainer')
     const cityDropdown = document.getElementById('cityDropdown');
 
+    // Populate dropdown for the first time on page load
+    populateDropdown();
+
+    const API_KEY = '7fdd900994b9456b832215556241009';
+    const API_BASE_URL = 'http://api.weatherapi.com/v1';
+
+    getWeatherByCityName("hyderabad")
+
     // event listner for searchButton
     document.getElementById('searchBtn').addEventListener('click', function () {
         const city = document.getElementById('city').value;
@@ -101,13 +109,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-
-    // Populate dropdown for the first time on page load
-    populateDropdown();
-
-    const API_KEY = '7fdd900994b9456b832215556241009';
-    const API_BASE_URL = 'http://api.weatherapi.com/v1';
-
     // function to get the weather in a particular city using its name
     async function getWeatherByCityName(cityName) {
         const url = `${API_BASE_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(cityName)}`;
@@ -173,8 +174,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to display error messages
     function showError(message) {
         const errorElem = document.getElementById('errorContainer');
+        const errorText = document.getElementById('errorText');
+        // Update the error message
+        console.log(errorText)
         errorElem.textContent = message;
+        // Make the error container visible
         errorElem.classList.remove('hidden');
+
         weatherContainerElem.classList.add('hidden');
 
         const forecastContainer = document.getElementById('forecastContainer');

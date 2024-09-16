@@ -36,8 +36,8 @@
                     <i class="fa-solid fa-location-crosshairs p-2"></i>Use Current Location
                 </button>
 
-                <div id="dropdownContainer" class="flex justify-center p-1 mt-2">
-                    <p class="text-sm text-base">Select from recent cities</p>
+                <div id="dropdownContainer" class="flex flex-col p-1 mt-4">
+                    <p class="text-sm text-base pb-2">Select from recent cities</p>
                     <select id="cityDropdown" class="w-full bg-gray-700 text-white p-2 rounded-lg focus:outline-none">
                         <option value="" disabled selected>Select recently searched cities</option>
                     </select>
@@ -45,7 +45,12 @@
             </div>
 
             <!-- error division, hidden by default -->
-            <div id="errorContainer" class="text-red-500 text-lg hidden"></div>
+            <div id="errorContainer" class="max-w-md mx-auto border border-red-500 text-red-500 text-lg rounded-lg p-4 flex items-center hidden">
+                <img src="error.png" alt="Error icon" class="w-12 h-12 rounded-full mr-4">
+                <div id="errorText">Your error message goes here.</div>
+            </div>
+            
+
             <!-- result / output / dat division-->
             <div id="weatherContainer" class="bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col items-start">
                 <div class="mb-4">
