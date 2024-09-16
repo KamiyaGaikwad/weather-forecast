@@ -11,30 +11,28 @@
 </head>
 
 <body>
-    <header class="bg-gray-800 text-white p-4 sm:p-6 md:p-8 lg:p-10 shadow-md">
+    <header class="text-white p-4 sm:p-6 md:p-8 lg:p-10 shadow-md">
         <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center">Weather Dashboard</h1>
     </header>
 
     <main class="p-4 sm:p-6 md:p-8 lg:p-10">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Input/ actions area-->
-            <div class="bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col items-start">
+            <div id="inputContainer" class="p-8 rounded-lg shadow-lg flex flex-col items-start gap-2">
                 <label for="city" class="block text-lg font-medium mb-2">City</label>
                 <input type="text" id="city" placeholder="Enter the city you want to search weather for"
                     class="w-full p-3 mb-2 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none" />
                 <button id="searchBtn"
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    class="w-full text-white py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     Search
                 </button>
-                <hr class="w-full my-4 border-white">
                 <button id="locationBtn"
-                    class="w-full bg-green-500 hover:bg-green-700 text-white py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    class="w-full text-white py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <i class="fa-solid fa-location-crosshairs p-2"></i>Use Current Location
                 </button>
 
-                <hr class="w-full my-4 border-white">
-
                 <div id="dropdownContainer" class="flex justify-center p-1">
+                    <hr class="w-full my-4 border-white">
                     <select id="cityDropdown" class="w-full bg-gray-700 text-white p-2 rounded-lg focus:outline-none">
                         <option value="" disabled selected>Select recently searched cities</option>
                     </select>
@@ -45,23 +43,42 @@
             <div id="errorContainer" class="text-red-500 text-lg hidden"></div>
             <!-- result / output / dat division-->
             <div id="weatherContainer" class="bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col items-start">
-                <h2 id="cityName" class="text-3xl font-semibold text-white mb-4">City Name</h2>
-                <p id="todayDate" class="text-lg text-white mb-2">Today's Date: ...</p>
-                <div id="weatherCondition" class="flex items-center gap-4 mb-4">
-                    <div id="conditionIcon" class="w-24 h-24 bg-gray-600 flex items-center justify-center rounded-full">
-                        <i class="fa-solid fa-cloud-sun text-white text-4xl"></i> <!-- Placeholder FontAwesome icon -->
-                    </div>
-                    <span id="conditionText" class="text-xl text-white">...</span>
+                <div class="mb-4">
+                    <h2 id="cityName" class="text-4xl font-semibold text-white">City Name</h2>
+
+                    <p id="todayDate" class="text-xl text-gray-500">...</p>
+
                 </div>
-                <p id="temperature" class="text-xl text-white mb-2">Temperature: ...°C</p>
-                <p id="feelsLike" class="text-xl text-white mb-2">Feels Like: ...°C</p>
-                <p id="wind" class="text-xl text-white mb-2">Wind: ... km/h</p>
-                <p id="humidity" class="text-xl text-white">Humidity: ... %</p>
+                <div id="weatherCondition" class="flex items-center gap-4 mb-4">
+                    <div id="conditionIcon" class="w-24 h-24 flex items-center justify-center rounded-full">
+                        <i class="fa-solid fa-cloud-sun text-white text-2xl"></i> <!-- Placeholder FontAwesome icon -->
+                    </div>
+                    <div class="flex flex-col gap-1.5 flex-row mb-2">
+                        <p id="temperature" class="text-4xl font-bold">...°C</p>
+                        <span id="conditionText" class="text-xl text-white">...</span>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-2 text-gray-300">
+                    <div class="flex items-center gap-1.5 flex-row">
+                        <i class="fa-solid fa-temperature-low"></i>
+                        <p id="feelsLike" class="text-base">Feels Like: ...°C</p>
+                    </div>
+                    <div class="flex items-center gap-1.5 flex-row">
+                        <i class="fa-solid fa-wind"></i>
+                        <p id="wind" class="text-base mb-2">Wind: ... km/h</p>
+                    </div>
+                    <div class="flex items-center gap-1.5 flex-row">
+                        <i class="fa-solid fa-thermometer-half"></i>
+                        <p id="humidity" class="text-base">Humidity: ... %</p>
+                    </div>
+                </div>
             </div>
 
             <!-- weather forecast-->
             <div id="forecastContainer"
-                class="bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col items-center w-full md:col-span-2 hidden">
+                class="p-8 rounded-lg shadow-lg flex flex-col items-center w-full md:col-span-2 hidden">
                 <h2 class="text-3xl font-semibold text-white mb-4">Weather Forecast</h2>
                 <div id="forecastDays" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     <!-- Each day's forecast will go here -->

@@ -21,14 +21,17 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('City detected as', city, "will find weather");
             // find weather by city name
             getWeatherByCityName(city)
-        }else {
+        } else {
             showError('Please enter a city name.');
         }
     });
 
-    cityNameElem.addEventListener('keypress', function (event) {
+    document.getElementById('city').addEventListener('keypress', function (event) {
+
         if (event.key === 'Enter') {
+            console.log("enter pressed")
             event.preventDefault(); // Prevent form submission
+            const searchBtn = document.getElementById('searchBtn')
             searchBtn.click(); // Trigger the search button click event
         }
     });
@@ -125,8 +128,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             else {
                 displayWeatherData(data);
-                 // add this city to the recent city dropdown and to local storage
-                 addCityToDropdown(data.location.name);
+                // add this city to the recent city dropdown and to local storage
+                addCityToDropdown(data.location.name);
             }
 
 
@@ -171,9 +174,9 @@ document.addEventListener('DOMContentLoaded', function () {
         errorElem.textContent = message;
         errorElem.classList.remove('hidden');
         weatherContainerElem.classList.add('hidden');
-        
+
         const forecastContainer = document.getElementById('forecastContainer');
-        forecastContainer.classList.add('hidden'); 
+        forecastContainer.classList.add('hidden');
     }
 
     // Function to hide the error message
@@ -194,14 +197,19 @@ document.addEventListener('DOMContentLoaded', function () {
         const cityName = data.location.name;
         // Extract date from API's location.localtime
         const localtime = data.location.localtime;
-        const formattedDate = localtime.split(' ')[0]; // Extract just the date part
+        const convertedDate = localtime.split(' ')[0]; // Extract just the date part
+        // Create a new Date object from the date string
+        const dateObj = new Date(convertedDate);
 
+        // Format the date using toLocaleDateString with options
+        const options = { weekday: 'long', day: 'numeric', month: 'short' };
+        const formattedDate = dateObj.toLocaleDateString('en-US', options);
 
         cityNameElem.textContent = cityName;
-        dateElem.textContent = `Today's Date: ${formattedDate}`;
+        dateElem.textContent = `${formattedDate}`;
         conditionTextElem.textContent = weatherData.condition.text;
-        conditionIconElem.innerHTML = `<img src="${data.current.condition.icon}" alt="Weather Condition Icon" class="w-24 h-24">`;
-        temperatureElem.textContent = `Temperature: ${weatherData.temp_c}°C`;
+        conditionIconElem.innerHTML = `<img src="${data.current.condition.icon}" alt="Weather Condition Icon" class="w-20 h-20">`;
+        temperatureElem.textContent = `${weatherData.temp_c}°C`;
         feelsLikeElem.textContent = `Feels Like: ${weatherData.feelslike_c}°C`;
         windElem.textContent = `Wind: ${weatherData.wind_kph} km/h`;
         humidityElem.textContent = `Humidity: ${weatherData.humidity}%`;
@@ -241,7 +249,11 @@ document.addEventListener('DOMContentLoaded', function () {
         forecastDaysElem.innerHTML = '';
 
         forecastDays.forEach(day => {
-            const forecastDate = new Date(day.date).toDateString();
+            const dayDate = new Date(day.date).toDateString(); // e.g., "Mon Sep 16 2024"
+            const [dayOfWeek, month, dayOfMonth] = dayDate.split(' ');
+
+            // Reassemble the date string without the year and add a comma after the day
+            const forecastDate = `${dayOfWeek}, ${dayOfMonth} ${month}`;
             const maxTemp = day.day.maxtemp_c;
             const minTemp = day.day.mintemp_c;
             const conditionText = day.day.condition.text;
@@ -249,12 +261,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Create forecast card
             const forecastCard = `
-                <div class="bg-gray-700 p-4 rounded-lg flex flex-col items-center">
-                    <h3 class="text-xl text-white">${forecastDate}</h3>
-                    <img src="${conditionIcon}" alt="${conditionText}" class="w-16 h-16 mb-2">
-                    <p class="text-white">Max Temp: ${maxTemp}°C</p>
-                    <p class="text-white">Min Temp: ${minTemp}°C</p>
-                    <p class="text-white">${conditionText}</p>
+                <div class="shadow-lg ring-1 bg-white/20 ring-white/5 p-4 bg-transparent backdrop-blur-lg rounded-lg flex flex-col items-left">
+                <div class="flex flex-row items-center text-white rounded-full mb-2"> 
+                    <img src="${conditionIcon}" alt="${conditionText}" class="w-10 h-10">
+                    <h3 class="text-xl font-bold text-white">${forecastDate}</h3>
+                </div> 
+                <h3 class="text-base font-semibold text-gray-300">Temp:</h3>   
+                    <div class="pb-2 text-sm">
+                        <p class="text-gray-300">Max:${maxTemp}°C</p>
+                        <p class="text-gray-300">Min: ${minTemp}°C</p>
+                    </div>
+                    <p class="text-gray-300 text-base">${conditionText}</p>
                 </div>
             `;
 
