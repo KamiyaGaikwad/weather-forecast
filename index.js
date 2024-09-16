@@ -262,17 +262,21 @@ document.addEventListener('DOMContentLoaded', function () {
             // Create forecast card
             const forecastCard = `
                 <div class="shadow-lg ring-1 bg-white/20 ring-white/5 p-4 bg-transparent backdrop-blur-lg rounded-lg flex flex-col items-left">
-                <div class="flex flex-row items-center text-white rounded-full mb-2"> 
-                    <img src="${conditionIcon}" alt="${conditionText}" class="w-10 h-10">
-                    <h3 class="text-xl font-bold text-white">${forecastDate}</h3>
-                </div> 
-                <h3 class="text-base font-semibold text-gray-300">Temp:</h3>   
-                    <div class="pb-2 text-sm">
-                        <p class="text-gray-300">Max:${maxTemp}°C</p>
-                        <p class="text-gray-300">Min: ${minTemp}°C</p>
-                    </div>
-                    <p class="text-gray-300 text-base">${conditionText}</p>
-                </div>
+                    <div class="flex flex-row items-center text-white rounded-full mb-2"> 
+                        <img src="${conditionIcon}" alt="${conditionText}" class="w-16 h-16">
+                        <div>
+                        <h3 class="text-xl font-bold text-white">${forecastDate}</h3>
+                        <p class="text-gray-300 text-base">${conditionText}</p>
+                        </div>
+                    </div> 
+                    <div class="flex flex-row p-2 items-center mt-auto">
+                    <i class="fa-solid fa-temperature-half fa-2x pr-2"></i>
+                            <div class="pb-2 text-sm">
+                                <p class="text-gray-300">Max: ${maxTemp}°C</p>
+                                <p class="text-gray-300">Min: ${minTemp}°C</p>
+                            </div>
+                    </div>   
+                <div>
             `;
 
             // Append forecast card to the container
