@@ -20,16 +20,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const API_KEY = '7fdd900994b9456b832215556241009';
     const API_BASE_URL = 'http://api.weatherapi.com/v1';
 
-    getWeatherByCityName("hyderabad")
+    // getWeatherByCityName("hyderabad")
 
     // event listner for searchButton
     document.getElementById('searchBtn').addEventListener('click', function () {
-        const city = document.getElementById('city').value;
+        const cityInput = document.getElementById('city');
+        const city = cityInput.value;
         if (city) {
             cityDropdown.value = "";
             console.log('City detected as', city, "will find weather");
             // find weather by city name
             getWeatherByCityName(city)
+            cityInput.value = "";
         } else {
             showError('Please enter a city name.');
             cityDropdown.value = "";
@@ -269,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Create forecast card
             const forecastCard = `
-                <div class="shadow-lg ring-1 bg-white/20 ring-white/5 p-4 bg-transparent backdrop-blur-lg rounded-lg flex flex-col items-left">
+                <div class="shadow-lg ring-1 bg-white/20 ring-white/5 p-4 backdrop-blur-lg rounded-lg flex flex-col items-left">
                     <div class="flex flex-row items-center text-white rounded-full mb-2"> 
                         <img src="${conditionIcon}" alt="${conditionText}" class="w-16 h-16">
                         <div>

@@ -5,17 +5,17 @@
     <title>Weather Forecast app</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon_io/site.webmanifest">
+    <link rel="stylesheet" href="output.css">
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <script src="https://kit.fontawesome.com/4bf861096a.js" crossorigin="anonymous"></script>
     
 </head>
 
-<body>
+<body class="bg-body-bg text-body-text">
     <header class="text-white p-4 sm:p-6 md:p-8 lg:p-10 shadow-md">
         <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center">Weather Dashboard</h1>
     </header>
@@ -23,21 +23,21 @@
     <main class="p-4 sm:p-6 md:p-8 lg:p-10">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Input/ actions area-->
-            <div id="inputContainer" class="p-8 rounded-lg shadow-lg flex flex-col items-start gap-2">
+            <div id="inputContainer" class="p-8 rounded-lg shadow-lg flex flex-col items-start gap-2 border border-blue-whale">
                 <label for="city" class="block text-lg font-medium mb-2">City</label>
                 <input type="text" id="city" placeholder="Enter the city you want to search weather for"
                     class="w-full p-3 mb-2 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none" />
                 <button id="searchBtn"
-                    class="w-full text-white py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    class="w-full text-white py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-light-blue hover:bg-search-btn-hover">
                     Search
                 </button>
                 <button id="locationBtn"
-                    class="w-full text-white py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    class="w-full text-white py-3 border border-light-blue rounded-lg focus:ring-2 focus:ring-blue-500">
                     <i class="fa-solid fa-location-crosshairs p-2"></i>Use Current Location
                 </button>
 
                 <div id="dropdownContainer" class="flex flex-col p-1 mt-4">
-                    <p class="text-sm text-base pb-2">Select from recent cities</p>
+                    <p class="text-base pb-2">Select from recent cities</p>
                     <select id="cityDropdown" class="w-full bg-gray-700 text-white p-2 rounded-lg focus:outline-none">
                         <option value="" disabled selected>Select recently searched cities</option>
                     </select>
@@ -46,13 +46,13 @@
 
             <!-- error division, hidden by default -->
             <div id="errorContainer" class="max-w-md mx-auto border border-red-500 text-red-500 text-lg rounded-lg p-4 flex items-center hidden">
-                <img src="error.png" alt="Error icon" class="w-12 h-12 rounded-full mr-4">
+                <img src="assets/error.png" alt="Error icon" class="w-12 h-12 rounded-full mr-4">
                 <div id="errorText">Your error message goes here.</div>
             </div>
             
 
             <!-- result / output / dat division-->
-            <div id="weatherContainer" class="bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col items-start">
+            <div id="weatherContainer" class="p-8 rounded-lg shadow-lg flex flex-col items-start bg-blue-whale hidden">
                 <div class="mb-4">
                     <h2 id="cityName" class="text-4xl font-semibold text-white">City Name</h2>
 
@@ -60,11 +60,11 @@
 
                 </div>
                 <div id="weatherCondition" class="flex items-center gap-4 mb-4">
-                    <div id="conditionIcon" class="w-24 h-24 flex items-center justify-center rounded-full">
+                    <div id="conditionIcon" class="w-24 h-24 flex items-center justify-center rounded-full border border-condition-icon-border">
                         <i class="fa-solid fa-cloud-sun text-white text-2xl"></i> <!-- Placeholder FontAwesome icon -->
                     </div>
-                    <div class="flex flex-col gap-1.5 flex-row mb-2">
-                        <p id="temperature" class="text-4xl font-bold">...°C</p>
+                    <div class="flex gap-1.5 flex-col mb-2">
+                        <p id="temperature" class="text-4xl font-bold text-temperature-text">...°C</p>
                         <span id="conditionText" class="text-xl text-white">...</span>
                     </div>
 
@@ -80,7 +80,7 @@
                         <p id="wind" class="text-base mb-2">Wind: ... km/h</p>
                     </div>
                     <div class="flex items-center gap-1.5 flex-row">
-                        <i class="fa-solid fa-thermometer-half"></i>
+                        <i class="fa-solid fa-droplet"></i>
                         <p id="humidity" class="text-base">Humidity: ... %</p>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
 
             <!-- weather forecast-->
             <div id="forecastContainer"
-                class="p-8 rounded-lg shadow-lg flex flex-col items-center w-full md:col-span-2 hidden">
+                class="bg-blue-whale p-8 rounded-lg shadow-lg flex flex-col items-center w-full md:col-span-2 hidden">
                 <h2 class="text-3xl font-semibold text-white mb-4">Weather Forecast</h2>
                 <div id="forecastDays" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     <!-- Each day's forecast will go here -->
