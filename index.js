@@ -214,11 +214,6 @@ document.addEventListener('DOMContentLoaded', function () {
         errorElem.classList.add('hidden');
     }
 
-    // Function to clear the previous weather data populated during last api call
-    function clearWeatherData() {
-        weatherContainerElem.innerHTML = ''; // Clear previous weather data
-    }
-
     // function to display weather data in the weather container
     function displayWeatherData(data) {
         const weatherData = data.current;
