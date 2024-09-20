@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 getWeatherByCoordinates(latitude, longitude)
             }, function (error) {
                 console.error('Error getting location:', error);
+                showError("Error getting location, ensure that location permission is enabled")
             });
         } else {
             // show an alert is geolocation is not supported
@@ -115,30 +116,37 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // function to get the weather in a particular city using its name
-    async function getWeatherByCityName(cityName) {
-        loadingContainer
-        const url = `${API_BASE_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(cityName)}`;
-
+    async function callWeatherAPI(url) {
         // Clear previous error if any
         hideError();
 
         try {
+
+            // hide weather container
             weatherContainerElem.classList.remove('flex');
             weatherContainerElem.classList.add('hidden');
+            // show loading container
             loadingContainer.classList.remove("hidden")
             loadingContainer.classList.add("flex")
 
+            // execute the api call for fetching the weather details for the selected city
             const response = await fetch(url);
+            // console.log(response.statusText)
             if (!response.ok) {
-                showError('Error fetching weather data. Please try another city or alternative name');
-                throw new Error('Network response was not ok');
+                if (response.status === 400 || 404) {
+                    showError('City not found. Please check the city name.');
+                } else if (response.status === 500) {
+                    showError('Server error. Please try again later.');
+                } else {
+                    showError(`An unexpected error occurred: ${response.statusText}`);
+                }
+                return; // Exit the function if response is not OK
             }
 
             const data = await response.json();
             console.log('Weather data for city:', data);
             if (data.error) {
-                showError('Error fetching weather data. Please try another city or alternative name');
+                showError('Error fetching weather data.');
             }
             else {
                 displayWeatherData(data);
@@ -146,46 +154,33 @@ document.addEventListener('DOMContentLoaded', function () {
                 addCityToDropdown(data.location.name);
             }
 
-            
-
-
         } catch (error) {
-            showError('Error fetching weather data. Please try another city or alternative name');
+            // Handle network-related errors (no internet)
+            if (error.name === 'TypeError') {
+                showError('Network error. Please check your internet connection.');
+            } else {
+                showError('An unexpected error occurred. Please try again.');
+            }
             console.error('Error fetching weather data:', error);
         }
-        finally{
+        finally {
             loadingContainer.classList.remove("flex")
             loadingContainer.classList.add("hidden")
         }
-        
+    }
+
+    // function to get the weather in a particular city using its name
+    async function getWeatherByCityName(cityName) {
+        loadingContainer
+        const url = `${API_BASE_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(cityName)}`;
+        callWeatherAPI(url)
+
     }
 
     // function to get the weather in a area by location
     async function getWeatherByCoordinates(lat, lon) {
         const url = `${API_BASE_URL}/current.json?key=${API_KEY}&q=${lat},${lon}`;
-
-        // Clear previous error data if any
-        hideError();
-
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                showError('Error fetching weather data. Please try another city or alternative name');
-            }
-            const data = await response.json();
-            if (data.error) {
-                showError('Error fetching weather data. Please try another city or alternative name');
-            }
-            else {
-                console.log('Weather data for current location:', data);
-                displayWeatherData(data);
-                addCityToDropdown(data.location.name)
-            }
-
-        } catch (error) {
-            showError('Error fetching weather data. Please try another city or alternative name');
-            console.error('Error fetching weather data:', error);
-        }
+        callWeatherAPI(url)
     }
 
     // Function to display error messages in the weather container itself
@@ -308,6 +303,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Make the forecast container visible
         forecastContainer.classList.remove('hidden');
+        forecastContainer.classList.add('flex');
 
     }
 
