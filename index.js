@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const windElem = document.getElementById('wind');
     const humidityElem = document.getElementById('humidity');
     const loadingContainer = document.getElementById("loadingContainer")
+    const forecastContainer = document.getElementById('forecastContainer');
+    const forecastDaysElem = document.getElementById('forecastDays');
 
     // empty state of the dropdown
     const dropdownContainer = document.getElementById('dropdownContainer')
@@ -53,6 +55,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.getElementById('locationBtn').addEventListener('click', function () {
+        hideError()
+        showLoader()
         // find the latitude and longitude of the user
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
@@ -71,6 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+
+
     // event listner for city selection dropdown when a new city is selected
     cityDropdown.addEventListener('change', function () {
         const selectedCity = cityDropdown.value;
@@ -79,6 +85,16 @@ document.addEventListener('DOMContentLoaded', function () {
             getWeatherByCityName(selectedCity);
         }
     });
+
+    function showLoader() {
+        loadingContainer.classList.remove("hidden")
+        loadingContainer.classList.add("flex")
+    }
+
+    function hideLoader() {
+        loadingContainer.classList.remove("flex")
+        loadingContainer.classList.add("hidden")
+    }
 
     // function to add current city to dropdown
     function addCityToDropdown(city) {
@@ -119,6 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
     async function callWeatherAPI(url) {
         // Clear previous error if any
         hideError();
+        showLoader();
 
         try {
 
@@ -126,8 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
             weatherContainerElem.classList.remove('flex');
             weatherContainerElem.classList.add('hidden');
             // show loading container
-            loadingContainer.classList.remove("hidden")
-            loadingContainer.classList.add("flex")
+            
 
             // execute the api call for fetching the weather details for the selected city
             const response = await fetch(url);
@@ -144,11 +160,13 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const data = await response.json();
-            console.log('Weather data for city:', data);
+            // console.log('Weather data for city:', data);
+            // if the status is 200 but API returns an error message we will show an error to the user
             if (data.error) {
                 showError('Error fetching weather data.');
             }
             else {
+                // display the weather data in the weather container
                 displayWeatherData(data);
                 // add this city to the recent city dropdown and to local storage
                 addCityToDropdown(data.location.name);
@@ -164,14 +182,12 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error fetching weather data:', error);
         }
         finally {
-            loadingContainer.classList.remove("flex")
-            loadingContainer.classList.add("hidden")
+            hideLoader()
         }
     }
 
     // function to get the weather in a particular city using its name
     async function getWeatherByCityName(cityName) {
-        loadingContainer
         const url = `${API_BASE_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(cityName)}`;
         callWeatherAPI(url)
 
@@ -195,8 +211,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         weatherContainerElem.classList.remove('flex');
         weatherContainerElem.classList.add('hidden');
-
-        const forecastContainer = document.getElementById('forecastContainer');
         forecastContainer.classList.remove('flex');
         forecastContainer.classList.add('hidden');
     }
@@ -232,6 +246,8 @@ document.addEventListener('DOMContentLoaded', function () {
         windElem.textContent = `Wind: ${weatherData.wind_kph} km/h`;
         humidityElem.textContent = `Humidity: ${weatherData.humidity}%`;
         weatherContainerElem.classList.remove('hidden');
+        weatherContainerElem.classList.add('flex');
+
         getWeatherForecast(cityName)
 
     }
@@ -260,9 +276,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // function to display the weatherforceast in the forecast container
     function displayWeatherForecast(forecastDays) {
-        const forecastContainer = document.getElementById('forecastContainer');
-        const forecastDaysElem = document.getElementById('forecastDays');
-
+        
         // Remove previous city forecast data
         forecastDaysElem.innerHTML = '';
 
