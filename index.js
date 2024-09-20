@@ -57,6 +57,11 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('locationBtn').addEventListener('click', function () {
         hideError()
         showLoader()
+
+        // hide weather container            
+        weatherContainerElem.classList.remove('flex');
+        weatherContainerElem.classList.add('hidden');
+
         // find the latitude and longitude of the user
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
@@ -67,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 getWeatherByCoordinates(latitude, longitude)
             }, function (error) {
                 console.error('Error getting location:', error);
+                hideLoader()
                 showError("Error getting location, ensure that location permission is enabled")
             });
         } else {
@@ -139,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         try {
 
-            // hide weather container
+            // hide weather container            
             weatherContainerElem.classList.remove('flex');
             weatherContainerElem.classList.add('hidden');
             // show loading container
@@ -293,22 +299,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Create forecast card
             const forecastCard = `
-                <div class="shadow-lg ring-1 bg-white/20 ring-white/5 p-4 backdrop-blur-lg rounded-lg flex flex-col items-left">
-                    <div class="flex flex-row items-center text-white rounded-full mb-2"> 
+                    <article class="shadow-lg ring-1 bg-white/20 ring-white/5 p-4 backdrop-blur-lg rounded-lg flex flex-col items-left">
+                    <header class="flex flex-row items-center text-white rounded-full mb-2"> 
                         <img src="${conditionIcon}" alt="${conditionText}" class="w-16 h-16">
-                        <div>
-                        <h3 class="text-xl font-bold text-white">${forecastDate}</h3>
-                        <p class="text-gray-300 text-base">${conditionText}</p>
-                        </div>
-                    </div> 
-                    <div class="flex flex-row p-2 items-center mt-auto">
-                    <i class="fa-solid fa-temperature-half fa-2x pr-2"></i>
-                            <div class="pb-2 text-sm">
-                                <p class="text-gray-300">Max: ${maxTemp}°C</p>
-                                <p class="text-gray-300">Min: ${minTemp}°C</p>
-                            </div>
-                    </div>   
-                <div>
+                        <section>
+                            <h3 class="text-xl font-bold text-white">${forecastDate}</h3>
+                            <p class="text-gray-300 text-base">${conditionText}</p>
+                        </section>
+                    </header> 
+                    <section class="flex flex-row p-2 items-center mt-auto">
+                        <i class="fa-solid fa-temperature-half fa-2x pr-2"></i>
+                        <section class="pb-2 text-sm">
+                            <p class="text-gray-300">Max: ${maxTemp}°C</p>
+                            <p class="text-gray-300">Min: ${minTemp}°C</p>
+                        </section>
+                    </section>   
+                </article>
+        
             `;
 
             // Append forecast card to the container
