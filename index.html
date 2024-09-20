@@ -45,18 +45,19 @@
             </div>
 
             <!-- error division, hidden by default -->
-            <div id="errorContainer" class="max-w-md mx-auto border border-red-500 text-red-500 text-lg rounded-lg p-4 flex items-center hidden">
-                <img src="assets/error.png" alt="Error icon" class="w-12 h-12 rounded-full mr-4">
-                <div id="errorText">Your error message goes here.</div>
+            <div id="errorContainer" class="flex-col border border-red-50  gap-2 text-red-100 text-lg rounded-lg p-4 justify-center items-center hidden">
+                <img src="assets/error.gif" alt="Error icon" class="w-20 h-20">
+                <p id="errorText" class="text-center">Your error message goes here.</p>
             </div>
             
-            <div id="loadingContainer" class="p-8 rounded-lg shadow-lg flex flex-col items-start bg-blue-whale hidden">
-                <img src="assets/loading.gif" alt="Loading GIF" >
+            <div id="loadingContainer" class="p-8 rounded-lg shadow-lg flex-col justify-center items-center bg-blue-whale hidden">
+                <img src="assets/loading.gif" alt="Loading GIF" class="mb-4">
+                <p class="text-white text-lg">Loading...</p>
             </div>
             
 
             <!-- result / output / dat division-->
-            <div id="weatherContainer" class="p-8 rounded-lg shadow-lg flex flex-col items-start bg-blue-whale hidden">
+            <div id="weatherContainer" class="p-8 rounded-lg shadow-lg flex-col items-start bg-blue-whale hidden">
                 <div class="mb-4">
                     <h2 id="cityName" class="text-4xl font-semibold text-white">City Name</h2>
 

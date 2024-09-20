@@ -9,10 +9,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const feelsLikeElem = document.getElementById('feelsLike');
     const windElem = document.getElementById('wind');
     const humidityElem = document.getElementById('humidity');
+    const loadingContainer = document.getElementById("loadingContainer")
 
     // empty state of the dropdown
     const dropdownContainer = document.getElementById('dropdownContainer')
     const cityDropdown = document.getElementById('cityDropdown');
+
+    const errorElem = document.getElementById('errorContainer');
+    const errorText = document.getElementById('errorText');
 
     // Populate dropdown for the first time on page load
     populateDropdown();
@@ -113,12 +117,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // function to get the weather in a particular city using its name
     async function getWeatherByCityName(cityName) {
+        loadingContainer
         const url = `${API_BASE_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(cityName)}`;
 
         // Clear previous error if any
         hideError();
 
         try {
+            weatherContainerElem.classList.remove('flex');
+            weatherContainerElem.classList.add('hidden');
+            loadingContainer.classList.remove("hidden")
+            loadingContainer.classList.add("flex")
 
             const response = await fetch(url);
             if (!response.ok) {
@@ -137,11 +146,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 addCityToDropdown(data.location.name);
             }
 
+            
+
 
         } catch (error) {
             showError('Error fetching weather data. Please try another city or alternative name');
             console.error('Error fetching weather data:', error);
         }
+        finally{
+            loadingContainer.classList.remove("flex")
+            loadingContainer.classList.add("hidden")
+        }
+        
     }
 
     // function to get the weather in a area by location
@@ -175,24 +191,26 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to display error messages in the weather container itself
     // Function to display error messages
     function showError(message) {
-        const errorElem = document.getElementById('errorContainer');
-        const errorText = document.getElementById('errorText');
         // Update the error message
         console.log(errorText)
-        errorElem.textContent = message;
+        errorText.textContent = message;
         // Make the error container visible
         errorElem.classList.remove('hidden');
+        errorElem.classList.add('flex');
 
+        weatherContainerElem.classList.remove('flex');
         weatherContainerElem.classList.add('hidden');
 
         const forecastContainer = document.getElementById('forecastContainer');
+        forecastContainer.classList.remove('flex');
         forecastContainer.classList.add('hidden');
     }
 
     // Function to hide the error message
     function hideError() {
         const errorElem = document.getElementById('errorContainer');
-        errorElem.textContent = '';
+        errorText.textContent = '';
+        errorElem.classList.remove('flex');
         errorElem.classList.add('hidden');
     }
 
