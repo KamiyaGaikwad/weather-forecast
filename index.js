@@ -69,6 +69,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // hide weather container by removing flex and adding hidden class            
         weatherContainerElem.classList.remove('flex');
         weatherContainerElem.classList.add('hidden');
+        // hide the forecast container
+        forecastContainer.classList.remove('flex');
+        forecastContainer.classList.add('hidden');
 
         // find the latitude and longitude of the user using ab browser function
         if (navigator.geolocation) {
