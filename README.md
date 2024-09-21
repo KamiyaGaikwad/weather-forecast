@@ -97,12 +97,12 @@ The application handles potential issues such as:
 
 ## Folder Structure
 
+```
 Weather-Forecast-App/
-│
 ├── assets/             # Icons, GIFs for containers, and favicon files
 ├── index.html          # JavaScript file for handling Weather API calls and output display
 ├── input.css           # File for custom tailwind configuration
 ├── output.css          # file genrated by tailwind based on input.css and other custom values
 ├── tailwind.config.js  # Tailwind CSS configuration file
 └── README.md           # Project documentation
-
+```
