@@ -29,8 +29,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const API_KEY = '7fdd900994b9456b832215556241009';
     const API_BASE_URL = 'http://api.weatherapi.com/v1';
 
-    // getWeatherByCityName("hyderabad")
-
     // event listner for click on searchButton
     document.getElementById('searchBtn').addEventListener('click', function () {
         // get the city input element by its id
@@ -171,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // execute the api call for fetching the weather details for the selected city or location
             const response = await fetch(url);
             // console.log(response.statusText)
-            // handle case where the response is not 2xx (not OK)
+            // handle case where the response is not 200 (not OK)
             if (!response.ok) {
                 if (response.status === 400 || 404) {
                     showError('City not found. Please check the city name.');
@@ -183,9 +181,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 return; // to exit the function if response is not OK
             }
             
-            // extract the data from the response if the response is 200 (2xx or OK)
+            // extract the data from the response if the response is 200 (OK)
             const data = await response.json();
-            // console.log('Weather data for city:', data);
+            
             // if the status is 200 but API returns an error message we will show an error to the user
             if (data.error) {
                 showError('Error fetching weather data.');
@@ -228,7 +226,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Function to display error messages in the weather container itself
-    // Function to display error messages
     function showError(message) {
         // Update the error message
         console.log(errorText)
@@ -301,6 +298,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // get the weather forecase by city name
             const response = await fetch(url);
             if (!response.ok) {
+                // throw an error so that the other part of the function is not executed
+                showError("Error while computing forecast, please try again later")
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
@@ -309,11 +308,11 @@ document.addEventListener('DOMContentLoaded', function () {
             // Display forecast data
             displayWeatherForecast(data.forecast.forecastday);
         } catch (error) {
-            console.error('Error fetching forecast data:', error);
+            // try to catch any error and just log it for now, since weather data is already loaded we will not show an error for forecast data 
+            showError("Error while computing forecast, please try again")
+            throw new Error('Error while trying to fetch forecast: ',error);
+            
         }
-
-
-
     }
 
     // function to display the weatherforceast in the forecast container
