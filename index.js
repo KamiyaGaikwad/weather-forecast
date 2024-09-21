@@ -1,3 +1,4 @@
+// wait for the DOM to load before executing the index.js function so that we don't face a null reference issue
 document.addEventListener('DOMContentLoaded', function () {
     //extract elements present in the weatherContainer
     const weatherContainerElem = document.getElementById('weatherContainer');
