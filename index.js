@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Constants for using the Weather API, API key and the API Base URL
     const API_KEY = '7fdd900994b9456b832215556241009';
-    const API_BASE_URL = 'http://api.weatherapi.com/v1';
+    const API_BASE_URL = 'https://api.weatherapi.com/v1';
 
     // event listner for click on searchButton
     document.getElementById('searchBtn').addEventListener('click', function () {
