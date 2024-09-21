@@ -10,7 +10,8 @@ The app can also show weather forecast for the City upto 3 days (More if you hav
 This app is responsive and optimized for multiple screen sizes, including desktop, iPad Mini, and iPhone SE.
 
 ## Table of Contents
-
+- [Live Link](#live-link)
+- [GitHub Repository](#github-repository)
 - [Objective](#objective)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
@@ -19,11 +20,15 @@ This app is responsive and optimized for multiple screen sizes, including deskto
 - [Using the application](#using-the-application)
 - [Error Handling](#error-handling)
 - [Folder Structure](#folder-structure)
-- [Contributing](#contributing)
 
+
+## Live Link
+Live Weather Forecast Application: [Your Live Link Here](#)
+
+## GitHub Repository
+GitHub Repository: [https://github.com/KamiyaGaikwad/weather-forecast](https://github.com/KamiyaGaikwad/weather-forecast)
 
 ## Objective
-
 The goal of this project was to build a functional weather application that can show real-time weather information and weather forecast based on user inputed city or city based on location, through a weather API.
 
 ## Features
@@ -99,10 +104,10 @@ The application handles potential issues such as:
 
 ```
 Weather-Forecast-App/
-├── assets/             # Icons, GIFs for containers, and favicon files
+├── assets/             # Icons, GIFs, and favicon files
 ├── index.html          # JavaScript file for handling Weather API calls and output display
 ├── input.css           # File for custom tailwind configuration
-├── output.css          # file genrated by tailwind based on input.css and other custom values
+├── output.css          # File genrated by tailwind based on input.css and other custom values
 ├── tailwind.config.js  # Tailwind CSS configuration file
 └── README.md           # Project documentation
 ```
